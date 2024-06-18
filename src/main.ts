@@ -1,4 +1,7 @@
 import "./style.css";
 import k from "@/kaplay";
+import { loadAssets } from "./util/loadAssets";
 
-k.add([k.text("Hello, world!"), k.pos(0, 0)]);
+loadAssets();
+
+k.go("mainMenu");
