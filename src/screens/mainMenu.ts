@@ -8,7 +8,7 @@ k.scene("mainMenu", () => {
     k.anchor("left"),
   ]);
   menuHolder.add([
-    k.text("Zen Game", {
+    k.text("Mini Golf.", {
       font: "inter-bold",
       size: 65,
     }),
