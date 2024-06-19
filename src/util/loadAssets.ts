@@ -9,6 +9,51 @@ function loadAssets() {
   k.loadFont("inter-bold", "/fonts/Inter-Bold.ttf", {
     filter: "linear",
   });
+
+  k.loadSprite("ball", "sprites/ball.png");
+
+  k.loadSpriteAtlas("sprites/terrain.png", {
+    grass: {
+      x: 0,
+      y: 0,
+      width: 64,
+      height: 64,
+    },
+
+    water: {
+      x: 64,
+      y: 0,
+      width: 64,
+      height: 64,
+    },
+  });
+
+  k.loadSpriteAtlas("sprites/arrows.png", {
+    arrow0: {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    },
+    arrow1: {
+      x: 0,
+      y: 0,
+      width: 16,
+      height: 48,
+    },
+    arrow2: {
+      x: 16,
+      y: 0,
+      width: 16,
+      height: 48,
+    },
+    arrow3: {
+      x: 32,
+      y: 0,
+      width: 16,
+      height: 48,
+    },
+  });
 }
 
 export { loadAssets };
