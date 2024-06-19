@@ -28,6 +28,16 @@ function loadAssets() {
     },
   });
 
+  k.loadSprite("arrows", "sprites/arrows.png", {
+    sliceX: 3,
+    anims: {
+      "1": { from: 0, to: 0 },
+      "2": { from: 1, to: 1 },
+      "3": { from: 2, to: 2 },
+    },
+  });
+
+  /*
   k.loadSpriteAtlas("sprites/arrows.png", {
     arrow0: {
       x: 0,
@@ -53,7 +63,7 @@ function loadAssets() {
       width: 16,
       height: 48,
     },
-  });
+  });*/
 }
 
 export { loadAssets };
