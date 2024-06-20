@@ -1,21 +1,29 @@
-# current ideas
+# This is a mini golf game
 
-- A rhythm game that uses youtube embeds for music so i dont get dmca'd
-  - the game would need an interesting gimmick
+Very WIP
 
-# Basic Rhythm Game Variations:
+# Planned
 
-- 4 buttons, A S J K to control 4 lanes
-- 2 buttons (ex. E and F) to control 2 lanes
-- use the mouse (literally osu)
-- copy sound space from roblox (osu but you're limited to a 3x3 grid)
+**Singleplayer**
 
-# More Variations
+- Singleplayer Campaign
+- Level (Golf Course) Editor with
+  Custom Level Format (base53 compression or binary files (although that wouldnt be very browser friendly))
 
-tower defense game where the towers shoot in rhythm
+**Design**
+
+- different color palettes that the user can choose
+- a more vibrant color palette (current one is too dark)
+
+**Multiplayer**
+
+- Highscores
+- Sharing Levels
+- Multiplayer through peer-to-peer (PeerJS, would still need a server though which is a problem)
+
+# Ideas
 
 zen game with dynamic music
--> farming game like Rusty's Retirement but with modern flat graphics
 
 # Colors:
 
