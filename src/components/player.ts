@@ -116,13 +116,18 @@ function createPlayer(x: number, y: number, parent: GameObj) {
   });
 
   player.onCollide("hole", (hole) => {
+    let magnitude = getMagnitute(player.velocity);
+
+    // Stop player from moving
     stopLoop();
-    player.enterState("finished");
     player.velocity = k.vec2(0, 0);
-    finishAnimation(hole);
+
+    player.enterState("finished");
+
+    finishAnimation(hole, magnitude);
   });
 
-  async function finishAnimation(hole: GameObj) {
+  async function finishAnimation(hole: GameObj, magnitude: number) {
     await k.tween(
       player.pos,
       hole.pos,
