@@ -39,7 +39,9 @@ zen game with dynamic music
 - #F66A9F - pink
 - #75CEE6 - light cyan
 - #338FB3 - dark cyan
+- #141b25 - darkest gray
 - #1D2633 - darker gray
 - #2B313F - dark gray
+- #3A404C - light dark gray
 - #494F59 - gray
 - #858A97 - light gray
