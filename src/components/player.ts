@@ -9,6 +9,8 @@ function createPlayer(x: number, y: number, parent: GameObj) {
     k.color("#2B313F"),
     k.pos(x, y),
     k.area(),
+    k.layer("player"),
+    k.scale(1),
     k.state("idle", ["idle", "dragging", "rolling", "flying", "finished"]),
     {
       velocity: k.vec2(0, 0),
@@ -75,6 +77,7 @@ function createPlayer(x: number, y: number, parent: GameObj) {
       if (getMagnitute(player.velocity) < 0.4) {
         console.log("Stopped rolling");
         player.enterState("idle");
+        player.velocity = k.vec2(0, 0);
         stopLoop();
       }
     });
@@ -111,6 +114,31 @@ function createPlayer(x: number, y: number, parent: GameObj) {
       player.velocity = k.vec2(-player.velocity.x, player.velocity.y);
     }
   });
+
+  player.onCollide("hole", (hole) => {
+    stopLoop();
+    player.enterState("finished");
+    player.velocity = k.vec2(0, 0);
+    finishAnimation(hole);
+  });
+
+  async function finishAnimation(hole: GameObj) {
+    await k.tween(
+      player.pos,
+      hole.pos,
+      0.75,
+      (p) => (player.pos = p),
+      k.easings.easeOutElastic
+    );
+    await k.wait(0.5);
+    await k.tween(
+      player.scale,
+      k.vec2(0, 0),
+      1,
+      (p) => (player.scale = p),
+      k.easings.easeInBounce
+    );
+  }
 }
 
 export { createPlayer };
