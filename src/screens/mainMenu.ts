@@ -3,6 +3,7 @@ import k from "@/kaplay";
 
 k.scene("mainMenu", () => {
   createBackground();
+
   const menuHolder = k.add([
     k.pos(k.width() / 4, k.height() / 3),
     k.anchor("left"),
@@ -20,7 +21,7 @@ k.scene("mainMenu", () => {
 
   const buttons = {
     Play: () => {
-      k.go("game");
+      k.go("editor");
     },
     Settings: () => {
       console.log("Settings");
