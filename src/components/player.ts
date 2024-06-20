@@ -27,20 +27,20 @@ function createPlayer(x: number, y: number, parent: GameObj) {
     k.sprite("arrows"),
     k.anchor("bot"),
     k.pos(0, -32),
-    k.opacity(0),
   ]);
 
+  arrows.play("0");
+
   player.onMouseDown(() => {
-    if (player.isHovering()) {
+    if (player.isHovering() && player.state === "idle") {
       player.enterState("dragging");
-      arrows.opacity = 1;
     }
   });
 
   player.onMouseRelease(() => {
     console.log(player.state);
     if (player.state === "dragging") {
-      arrows.opacity = 0;
+      arrows.play("0");
 
       const velocityThreshold = 28;
       const vel = player.worldPos().sub(trueMousePos()).scale(0.2);
@@ -64,6 +64,9 @@ function createPlayer(x: number, y: number, parent: GameObj) {
   }
 
   player.onStateEnter("rolling", () => {
+    // This loop is running at about 40 fps
+    // I didnt use onUpdate because it runs at 60/144 fps
+    // kaplay does not have a way to change the update rate
     loop = k.loop(0.025, () => {
       player.moveBy(player.velocity);
 
@@ -92,6 +95,20 @@ function createPlayer(x: number, y: number, parent: GameObj) {
     }
 
     if (player.state === "rolling") {
+    }
+  });
+
+  player.onCollide("wall", (wall, col) => {
+    console.log("Collided with wall");
+
+    player.resolveCollision(wall);
+
+    if (!col) return;
+
+    if (col.isBottom() || col.isTop()) {
+      player.velocity = k.vec2(player.velocity.x, -player.velocity.y);
+    } else if (col.isLeft() || col.isRight()) {
+      player.velocity = k.vec2(-player.velocity.x, player.velocity.y);
     }
   });
 }
