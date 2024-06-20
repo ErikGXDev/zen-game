@@ -11,6 +11,7 @@ function loadAssets() {
   });
 
   k.loadSprite("ball", "sprites/ball.png");
+  k.loadSprite("hole", "sprites/hole.png");
 
   k.loadSpriteAtlas("sprites/terrain.png", {
     grass: {
@@ -38,6 +39,11 @@ function loadAssets() {
       "3": { from: 4, to: 4 },
     },
   });
+
+  k.layers(
+    ["background", "decoration", "terrain", "default", "player", "ui"],
+    "default"
+  );
 
   /*
   k.loadSpriteAtlas("sprites/arrows.png", {
