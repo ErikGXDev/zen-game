@@ -28,4 +28,34 @@ function createHole(x: number, y: number, parent: GameObj) {
   return hole;
 }
 
-export { createWall, createHole };
+function createGrass(x: number, y: number, parent: GameObj) {
+  const grass = parent.add([k.sprite("grass"), k.pos(x, y)]);
+
+  return grass;
+}
+
+function createGround(
+  x: number,
+  y: number,
+  parent: GameObj,
+  size: number = 64
+) {
+  let r1 = k.rand(-10, 10);
+  let r2 = k.rand(-10, 10);
+
+  parent.add([
+    k.circle(64),
+    k.color(139, 189, 150),
+    k.pos(x + size / 2 + r1, y + size / 2 + r2),
+    k.z(-10),
+  ]);
+
+  parent.add([
+    k.circle(72),
+    k.color(122, 161, 131),
+    k.pos(x + size / 2 + r1, y + size / 2 + r2),
+    k.z(-11),
+  ]);
+}
+
+export { createWall, createHole, createGround, createGrass };
