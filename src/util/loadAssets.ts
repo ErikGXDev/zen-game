@@ -1,6 +1,7 @@
 import k from "@/kaplay";
 import "@/screens/mainMenu";
 import "@/screens/game";
+import "@/screens/editor";
 
 function loadAssets() {
   k.loadFont("inter", "/fonts/Inter-Regular.ttf", {
