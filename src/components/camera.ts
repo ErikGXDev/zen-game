@@ -26,9 +26,9 @@ function registerCameraControls() {
 }
 
 function createUIHolder() {
-  let uiHolder = k.add([k.pos(0, 0), k.layer("ui"), k.opacity(0), k.scale(1)]);
+  let uiHolder = k.add([k.pos(), k.layer("ui"), k.opacity(0), k.scale(1)]);
   uiHolder.onUpdate(() => {
-    uiHolder.pos = k.camPos();
+    uiHolder.pos = k.camPos().sub(k.width() / 2, k.height() / 2);
   });
   return uiHolder;
 }
