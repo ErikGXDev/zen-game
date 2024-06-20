@@ -1,6 +1,6 @@
 import { createBackground, createField } from "@/components/background";
 import k from "@/kaplay";
-import { createPlayer } from "@/util/player";
+import { createPlayer } from "@/components/player";
 
 k.scene("game", () => {
   createBackground();

@@ -1,7 +1,7 @@
 import k from "@/kaplay";
 import { EventController, GameObj } from "kaplay";
-import { trueMousePos } from "./mouse";
-import { getMagnitute } from "./math";
+import { trueMousePos } from "../util/mouse";
+import { getMagnitute } from "../util/math";
 
 function createPlayer(x: number, y: number, parent: GameObj) {
   const player = parent.add([
