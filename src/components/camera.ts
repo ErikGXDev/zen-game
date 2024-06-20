@@ -25,4 +25,12 @@ function registerCameraControls() {
   });
 }
 
-export { registerCameraControls };
+function createUIHolder() {
+  let uiHolder = k.add([k.pos(0, 0), k.layer("ui"), k.opacity(0), k.scale(1)]);
+  uiHolder.onUpdate(() => {
+    uiHolder.pos = k.camPos();
+  });
+  return uiHolder;
+}
+
+export { registerCameraControls, createUIHolder };
