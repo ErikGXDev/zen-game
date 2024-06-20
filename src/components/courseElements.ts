@@ -11,6 +11,8 @@ function createWall(x: number, y: number, parent: GameObj) {
     "wall",
   ]);
 
+  wall.add([k.rect(48, 48), k.color("#1D2633"), k.pos(8, 8)]);
+
   return wall;
 }
 
@@ -40,22 +42,46 @@ function createGround(
   parent: GameObj,
   size: number = 64
 ) {
-  let r1 = k.rand(-10, 10);
-  let r2 = k.rand(-10, 10);
+  // KAPLAY, WHYY
+  // WHAT THE HELL
+  // WHY IS THIS SO HARD
 
-  parent.add([
+  const cS = parent.add([k.pos(x, y), k.z(-10)]);
+
+  cS.add([
     k.circle(64),
     k.color(139, 189, 150),
-    k.pos(x + size / 2 + r1, y + size / 2 + r2),
+    k.pos(size / 2, size / 2),
     k.z(-10),
   ]);
 
-  parent.add([
+  const cB = parent.add([k.pos(x, y), k.z(-11)]);
+
+  cB.add([
     k.circle(72),
     k.color(122, 161, 131),
-    k.pos(x + size / 2 + r1, y + size / 2 + r2),
+    k.pos(size / 2, size / 2),
     k.z(-11),
   ]);
+
+  return [cS, cB];
+  /*
+  const ground = k.add([k.pos(x, y)]);
+
+  ground.add([
+    k.circle(64),
+    k.color(139, 189, 150),
+    k.pos(size / 2, size / 2),
+    k.z(-10),
+  ]);
+  ground.add([
+    k.circle(72),
+    k.color(122, 161, 131),
+    k.pos(size / 2, size / 2),
+    k.layer("terrain"),
+  ]);
+
+  return ground;*/
 }
 
 export { createWall, createHole, createGround, createGrass };
