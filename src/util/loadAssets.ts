@@ -29,11 +29,13 @@ function loadAssets() {
   });
 
   k.loadSprite("arrows", "sprites/arrows.png", {
-    sliceX: 3,
+    sliceX: 5,
     anims: {
-      "1": { from: 0, to: 0 },
-      "2": { from: 1, to: 1 },
-      "3": { from: 2, to: 2 },
+      // Had to remove the first frame because it adds a black line from a different image in the atlas
+      "0": { from: 1, to: 1 },
+      "1": { from: 2, to: 2 },
+      "2": { from: 3, to: 3 },
+      "3": { from: 4, to: 4 },
     },
   });
 
