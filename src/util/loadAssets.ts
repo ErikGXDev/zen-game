@@ -22,7 +22,7 @@ function loadAssets() {
       height: 64,
     },
 
-    water: {
+    wall: {
       x: 64,
       y: 0,
       width: 64,
