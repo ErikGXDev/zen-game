@@ -8,7 +8,7 @@ import {
 import { createGrid } from "@/components/grid";
 import k from "@/kaplay";
 import { alignToGrid } from "@/util/math";
-import { GameObj } from "kaplay";
+import { GameObj, MouseButton } from "kaplay";
 
 k.scene("editor", () => {
   createBackground();
@@ -23,10 +23,14 @@ k.scene("editor", () => {
 
   let selectedElement = "grass";
 
+  let mouseDown = false;
+
+  const hoveringElements: GameObj[] = [];
+
   function createPreviewElement(
-    createFunc: (x: number, y: number, parent: GameObj) => GameObj | GameObj[]
+    createFunc: (x: number, y: number, parent: GameObj) => GameObj
   ) {
-    let previewElement;
+    let previewElement: GameObj;
 
     let createdElement = createFunc(0, 0, field);
 
@@ -37,27 +41,94 @@ k.scene("editor", () => {
       previewElement = createdElement;
     }
 
-    previewElement.onMouseMove(() => {
-      let truePos = k.mousePos().sub(field.pos);
-      previewElement.pos = alignToGrid(truePos);
-    });
+    previewElement.use(k.opacity(0.5));
+    previewElement.unuse("area");
+    // @ts-ignore
+    previewElement.use({ lastPos: null });
 
-    previewElement.onMousePress(() => {
-      for (let i = 0; i < buttons.length; i++) {
-        let button = buttons[i];
+    function createNewElement() {
+      for (let i = 0; i < elementButtons.length; i++) {
+        let button = elementButtons[i];
         if (button.isHovering()) {
           return;
         }
       }
 
-      createFunc(previewElement.pos.x, previewElement.pos.y, field);
+      if (hoveringElements.length > 0) {
+        for (let i = 0; i < hoveringElements.length; i++) {
+          hoveringElements[i].destroy();
+        }
+
+        hoveringElements.length = 0;
+      }
+
+      let element = createFunc(
+        previewElement.pos.x,
+        previewElement.pos.y,
+        field
+      );
+
+      k.wait(1, () => {
+        element.unuse("area");
+        element.use(k.area());
+
+        element.onHover(() => {
+          hoveringElements.push(element);
+          console.log(hoveringElements);
+        });
+
+        element.onHoverEnd(() => {
+          hoveringElements.splice(hoveringElements.indexOf(element), 1);
+          console.log(hoveringElements);
+        });
+      });
+    }
+
+    previewElement.onUpdate(() => {
+      if (k.isMouseDown("left")) {
+        mouseDown = true;
+      } else {
+        mouseDown = false;
+      }
+
+      let truePos = k
+        .mousePos()
+        .sub(field.pos)
+        .add(k.camPos().sub(k.width() / 2, k.height() / 2));
+      previewElement.pos = alignToGrid(truePos);
+      if (!previewElement.lastPos) {
+        previewElement.lastPos = previewElement.pos;
+      }
+      console.log(previewElement.pos, previewElement.lastPos);
+      if (
+        !(
+          previewElement.pos.x == previewElement.lastPos.x &&
+          previewElement.pos.y == previewElement.lastPos.y
+        )
+      ) {
+        console.log("Change!");
+        if (mouseDown) {
+          console.log("Creating element!!!");
+          createNewElement();
+        }
+        previewElement.lastPos = previewElement.pos;
+      }
+    });
+
+    previewElement.onMousePress((m: MouseButton) => {
+      if (m == "right") {
+        const element = hoveringElements.shift();
+        if (element) {
+          element.destroy();
+        }
+      }
     });
 
     return previewElement;
   }
 
   function replaceCurrentPreviewElement(
-    createFunc: (x: number, y: number, parent: GameObj) => GameObj | GameObj[]
+    createFunc: (x: number, y: number, parent: GameObj) => GameObj
   ) {
     currPreviewElement.destroy();
     currPreviewElement = createPreviewElement(createFunc);
@@ -66,7 +137,7 @@ k.scene("editor", () => {
   let currPreviewElement = createPreviewElement(createGrass);
 
   function updateElementButtonColors() {
-    buttons.forEach((button) => {
+    elementButtons.forEach((button) => {
       console.log(button.element, selectedElement);
       if (button.element === selectedElement) {
         button.color = k.rgb("#75CEE6");
@@ -81,8 +152,8 @@ k.scene("editor", () => {
     y: number,
     parent: GameObj,
     element: string,
-    createFunc: (x: number, y: number, parent: GameObj) => GameObj | GameObj[],
-    iconFunc: (p: GameObj) => GameObj
+    iconName: string,
+    createFunc: (x: number, y: number, parent: GameObj) => GameObj
   ) {
     let button = parent.add([
       k.rect(64, 64, { radius: 4 }),
@@ -97,31 +168,28 @@ k.scene("editor", () => {
       },
     ]);
 
-    iconFunc(button);
+    button.add([k.sprite(iconName), k.pos(8, 8)]);
 
     button.onClick(() => {
       console.log("Clicked", element);
       selectedElement = element;
       updateElementButtonColors();
       replaceCurrentPreviewElement(createFunc);
-    });
+    }, "left");
 
     return button;
   }
 
-  let buttons: GameObj[] = [
-    createElementButton(10, 10, uiHolder, "grass", createGrass, (p) =>
-      p.add([k.sprite("grass"), k.pos(8, 8), k.scale(0.75)])
+  let elementButtons: GameObj[] = [
+    createElementButton(10, 10, uiHolder, "grass", "grass_icon", createGrass),
+    createElementButton(10, 86, uiHolder, "wall", "wall_icon", createWall),
+    createElementButton(
+      10,
+      162,
+      uiHolder,
+      "ground",
+      "ground_icon",
+      createGround
     ),
-    createElementButton(10, 86, uiHolder, "wall", createWall, (p) => {
-      let wall = createWall(8, 8, p);
-      wall.use(k.scale(0.75));
-      return wall;
-    }),
-    createElementButton(10, 162, uiHolder, "ground", createGround, (p) => {
-      let ground = p.add([k.circle(24), k.color(122, 161, 131), k.pos(32, 32)]);
-      ground.add([k.circle(20), k.color(139, 189, 150), k.pos(0, 0)]);
-      return ground;
-    }),
   ];
 });
