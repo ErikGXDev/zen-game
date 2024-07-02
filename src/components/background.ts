@@ -24,6 +24,7 @@ function createField(w: number, h: number, size: number = 64) {
   return field;
 }
 
+/*
 function generateDecoField(
   w: number,
   h: number,
@@ -44,5 +45,6 @@ function generateDecoField(
 
   return parent;
 }
+*/
 
 export { createBackground, createField };
