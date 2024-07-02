@@ -30,6 +30,27 @@ function loadAssets() {
     },
   });
 
+  k.loadSpriteAtlas("sprites/editoricons.png", {
+    grass_icon: {
+      x: 0,
+      y: 0,
+      width: 48,
+      height: 48,
+    },
+    wall_icon: {
+      x: 48,
+      y: 0,
+      width: 48,
+      height: 48,
+    },
+    ground_icon: {
+      x: 96,
+      y: 0,
+      width: 48,
+      height: 48,
+    },
+  });
+
   k.loadSprite("arrows", "sprites/arrows.png", {
     sliceX: 5,
     anims: {
