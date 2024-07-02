@@ -4,14 +4,14 @@ import { GameObj } from "kaplay";
 function createWall(x: number, y: number, parent: GameObj) {
   const wall = parent.add([
     k.rect(64, 64),
-    k.color("#2B313F"),
+    k.color("#1D2633"),
     k.pos(x, y),
     k.area(),
     k.body({ isStatic: true }),
     "wall",
   ]);
 
-  wall.add([k.rect(48, 48), k.color("#1D2633"), k.pos(8, 8)]);
+  wall.add([k.rect(48, 48), k.color("#2B313F"), k.pos(8, 8)]);
 
   return wall;
 }
@@ -42,6 +42,7 @@ function createGround(
   parent: GameObj,
   size: number = 64
 ) {
+  /* 
   // KAPLAY, WHYY
   // WHAT THE HELL
   // WHY IS THIS SO HARD
@@ -65,8 +66,10 @@ function createGround(
   ]);
 
   return [cS, cB];
-  /*
-  const ground = k.add([k.pos(x, y)]);
+
+  */
+
+  const ground = k.add([k.pos(x, y), k.z(-8)]);
 
   ground.add([
     k.circle(64),
@@ -78,10 +81,10 @@ function createGround(
     k.circle(72),
     k.color(122, 161, 131),
     k.pos(size / 2, size / 2),
-    k.layer("terrain"),
+    k.z(-11),
   ]);
 
-  return ground;*/
+  return ground;
 }
 
 export { createWall, createHole, createGround, createGrass };
