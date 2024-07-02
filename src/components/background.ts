@@ -7,6 +7,7 @@ function createBackground() {
     k.rect(k.width() + 20, k.height() + 20),
     k.pos(0, 0),
     k.color(43, 49, 63),
+    k.z(-100),
   ]);
   bg.onUpdate(() => {
     let c = k.camPos();
